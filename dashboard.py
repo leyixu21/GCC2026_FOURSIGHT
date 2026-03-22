@@ -32,7 +32,7 @@ data = responses.merge(personalities, on="User", how="left")
 # -----------------------------
 
 def compute_dimension_scores(responses, score_tables):
-    dimensions = ["REACT", "TRUST", "INDEPEND", "ADAPT", "MOBILITY", "SAFETY"]
+    dimensions = ["REACT", "TRUST", "INDEPENDENT", "ADAPT", "MOBILITY", "SAFETY"]
     user_scores = []
 
     for _, row in responses.iterrows():
