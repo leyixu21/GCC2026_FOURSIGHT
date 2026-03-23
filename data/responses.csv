@@ -1,0 +1,11 @@
+User,Age,Municipality,Gender,Dependants,Q1,Q2,Q3,Q4,Q5,Q1_text,Q2_text,Q3_text,Q4_text,Q5_text
+User_1,20,Helsinki,Female,Pets,C,A,A,A,C,,,,,
+User_2,35,Espoo,Male,Children,B,C,B,B,B,,,,,
+User_3,49,Akka,Others,,A,D,D,C,A,contact authorities,,,,
+User_4,22,Helsinki,Female,Elderly,D,A,D,C,D,,confirm the safety of family and friends,,,
+User_5,32,Helsinki,Male,,A,B,A,C,D,,,,Panic,
+User_6,50,Helsinki,Female,Pets,B,C,C,C,B,,,,,
+User_7,33,Espoo,Female,,C,A,E,A,C,,,somewhere safe within the municipality,,
+User_8,40,Eura,Others,Children,B,C,B,E,B,,,cycling,,
+User_9,60,Espoo,Male,Pets,A,D,A,C,C,,pets,,,
+User_10,55,Joensuu,Male,Children,B,A,C,C,A,,,,,
