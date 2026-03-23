@@ -262,7 +262,7 @@ with tab3:
         # Generate word cloud
         wc = WordCloud(
             width=800,
-            height=400,
+            height=600,
             background_color="white",
             colormap="inferno",
             max_words=200
