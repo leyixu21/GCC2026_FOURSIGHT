@@ -1,6 +1,6 @@
 User,Age,Municipality,Gender,Dependants,Q1,Q2,Q3,Q4,Q5,Q1_text,Q2_text,Q3_text,Q4_text,Q5_text
 User_1,20,Helsinki,Female,Pets,C,A,A,A,C,,,,,
-User_2,35,Espoo,Male,Children,B,C,B,B,B,,,,,
+User_2,35,Espoo,Male,Children,B,C,B,B,D,,,,crowded confusion delay risk hide secure area shelter exit social media dander avoid,
 User_3,49,Akka,Others,,A,D,D,C,A,contact authorities,,,,
 User_4,22,Helsinki,Female,Elderly,D,A,D,C,D,,confirm the safety of family and friends,,,
 User_5,32,Helsinki,Male,,A,B,A,C,D,,,,Panic,
