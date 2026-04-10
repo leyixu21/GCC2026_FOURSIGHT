@@ -4,57 +4,114 @@ import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+from io import StringIO
 
 st.set_page_config(layout="wide")
+
+# Personality mapping
+PERSONALITY_MAPPING = {
+    'REACT': 'The Quickstarter',
+    'TRUST': 'The Guided Follower',
+    'INDEPENDENT': 'The Independent Thinker',
+    'ADAPT': 'The Flexible Adapter',
+    'MOBILITY': 'The Go-Getter',
+    'SAFETY': 'The Safety Seeker'
+}
+
+# Reverse mapping for reference
+DIMENSION_TO_PERSONALITY = {
+    'score_react': ('REACT', 'The Quickstarter'),
+    'score_trust': ('TRUST', 'The Guided Follower'),
+    'score_indep': ('INDEPENDENT', 'The Independent Thinker'),
+    'score_adapt': ('ADAPT', 'The Flexible Adapter'),
+    'score_mobil': ('MOBILITY', 'The Go-Getter'),
+    'score_safety': ('SAFETY', 'The Safety Seeker')
+}
 
 # -----------------------------
 # Load Data
 # -----------------------------
 @st.cache_data
 def load_data():
-    responses = pd.read_csv("data/responses.csv")
-    personalities = pd.read_csv("data/personalities.csv")
+    """Load data from secrets or local files"""
+    try:
+        # Try to load from Streamlit secrets (for Streamlit Cloud deployment)
+        decisions_csv = st.secrets["decisions_data"]
+        players_csv = st.secrets["players_data"]
+        
+        decisions = pd.read_csv(StringIO(decisions_csv))
+        players = pd.read_csv(StringIO(players_csv))
+    except (FileNotFoundError, KeyError):
+        # Fallback to local files (for local development)
+        decisions = pd.read_csv("data/feedback_round1/decisions_rows.csv")
+        players = pd.read_csv("data/feedback_round1/players_rows.csv")
+    
+    return decisions, players
 
-    score_tables = {}
-    for i in range(1, 6):
-        score_tables[f"Q{i}"] = pd.read_csv(f"data/Q{i}_scores.csv")
-    return responses, personalities, score_tables
+@st.cache_data
+def calculate_personality(dimension_scores):
+    """
+    Calculate dominant personality from dimension scores.
+    Returns the dimension name with the highest average score.
+    In case of ties, uses the first occurrence (deterministic).
+    """
+    if len(dimension_scores) == 0:
+        return None
+    max_score = dimension_scores.max()
+    return dimension_scores.idxmax()
 
-responses, personalities, score_tables = load_data()
+decisions, players = load_data()
 
-responses["User"] = responses["User"].astype(str).str.strip()
-personalities["User"] = personalities["User"].astype(str).str.strip()
+# Transform decisions data: pivot to get one row per player with Q1-Q5 answers
+# Group by player_id and question_id, then pivot
+decisions_pivot = decisions.pivot_table(
+    index='player_id',
+    columns='question_id',
+    values='option_chosen',
+    aggfunc='first'  # In case of duplicates, take first
+).reset_index()
 
-data = responses.merge(personalities, on="User", how="left")
+# Rename columns to Q1, Q2, Q3, Q4, Q5 based on position
+decisions_pivot = decisions_pivot.rename(columns={col: f"Q{i+1}" for i, col in enumerate(decisions_pivot.columns[1:])})
 
-# -----------------------------
-# Compute Dimension Scores
-# -----------------------------
+# Get dimension scores (average across all responses per player)
+dimension_cols = ['score_react', 'score_trust', 'score_indep', 'score_adapt', 'score_mobil', 'score_safety']
+scores_per_player = decisions.groupby('player_id')[dimension_cols].mean().reset_index()
 
-def compute_dimension_scores(responses, score_tables):
-    dimensions = ["REACT", "TRUST", "INDEPENDENT", "ADAPT", "MOBILITY", "SAFETY"]
-    user_scores = []
+# Calculate personality (dominant dimension) for each player
+dim_names = ['REACT', 'TRUST', 'INDEPENDENT', 'ADAPT', 'MOBILITY', 'SAFETY']
+personalities = []
+personality_titles = []
+for idx, row in scores_per_player.iterrows():
+    dim_scores = row[dimension_cols]
+    personality = calculate_personality(dim_scores)
+    # Map dimension keys to personality names
+    personality_map = {
+        'score_react': 'REACT',
+        'score_trust': 'TRUST',
+        'score_indep': 'INDEPENDENT',
+        'score_adapt': 'ADAPT',
+        'score_mobil': 'MOBILITY',
+        'score_safety': 'SAFETY'
+    }
+    personality_label = personality_map.get(personality, 'UNKNOWN')
+    personalities.append(personality_label)
+    personality_titles.append(PERSONALITY_MAPPING.get(personality_label, personality_label))
 
-    for _, row in responses.iterrows():
-        total = dict.fromkeys(dimensions, 0)
-        for q in score_tables.keys():
-            answer = row[q]
-            table = score_tables[q]
-            match = table[table["Answer"] == answer]
+scores_per_player['Personality'] = personalities
+scores_per_player['PersonalityType'] = personality_titles
 
-            if not match.empty:
-                for dim in dimensions:
-                    val = match.iloc[0][dim]
-                    if pd.notna(val):
-                        total[dim] += val
+# Merge decisions with player info
+players_rename = players.rename(columns={'id': 'player_id', 'nickname': 'User', 'gender': 'Gender', 'municipality': 'Municipality'})
+data = decisions_pivot.merge(scores_per_player, on='player_id', how='left')
+data = data.merge(players_rename[['player_id', 'User', 'age', 'Gender', 'Municipality']], on='player_id', how='left')
+data = data.rename(columns={'age': 'Age'})
 
-        user_scores.append(total)
-
-    return pd.DataFrame(user_scores)
-
+# Prepare dimension scores with updated column names
 base_responses = data[[f"Q{i}" for i in range(1, 6)]]
-dim_scores = compute_dimension_scores(base_responses, score_tables)
-dim_scores["Personality"] = data["Personality"].values
+dim_scores = data[['score_react', 'score_trust', 'score_indep', 'score_adapt', 'score_mobil', 'score_safety']].copy()
+dim_scores.columns = ['REACT', 'TRUST', 'INDEPENDENT', 'ADAPT', 'MOBILITY', 'SAFETY']
+dim_scores["PersonalityType"] = data["PersonalityType"].values
 
 st.title("Player Behavior Dashboard")
 
@@ -76,11 +133,11 @@ with tab1:
     with col1.container(border=True, height="stretch"):
         st.subheader("Personality Overview")
         st.metric("Total Respondents", len(data))
-        st.metric("Most Common Personality", data["Personality"].mode()[0])
+        st.metric("Most Common Personality", data["PersonalityType"].mode()[0])
 
     with col2.container(border=True, height="stretch"):
         st.subheader("Personality Distribution")
-        personality_counts = data["Personality"].value_counts().reset_index()
+        personality_counts = data["PersonalityType"].value_counts().reset_index()
         personality_counts.columns = ["Personality", "Count"]
 
         # Create pie chart
@@ -89,7 +146,7 @@ with tab1:
         # Update layout for fonts
         fig.update_layout(
             legend=dict(
-                title=dict(text="Personality", font=dict(size=16)),  # Legend title font
+                title=dict(text="Personality Type", font=dict(size=16)),  # Legend title font
                 font=dict(size=16),                                  # Legend items font size
             )
         )
@@ -250,29 +307,31 @@ with tab3:
     with col4.container(border=True, height="stretch"):
         st.subheader("Out-of-the-Box Answers")
 
-        # Combine all free-text columns into one string
-        free_text_cols = [f"Q{i}_text" for i in range(1, 6)]
+        # Combine all free-text responses into one string (from decisions table)
         text_data = " ".join(
-            data[free_text_cols]
+            decisions['other_text']
             .fillna("")              # remove NaNs
             .astype(str)             # ensure all are strings
-            .values.flatten()        # flatten into 1D array
-        )
+            .values
+        ).strip()
 
-        # Generate word cloud
-        wc = WordCloud(
-            width=800,
-            height=600,
-            background_color="white",
-            colormap="inferno",
-            max_words=200
-        ).generate(text_data)
+        # Generate word cloud only if there is text data
+        if text_data and len(text_data.split()) > 0:
+            wc = WordCloud(
+                width=800,
+                height=600,
+                background_color="white",
+                colormap="inferno",
+                max_words=200
+            ).generate(text_data)
 
-        # Display with matplotlib
-        fig, ax = plt.subplots(figsize=(10, 5))
-        ax.imshow(wc, interpolation='bilinear')
-        ax.axis("off")
-        st.pyplot(fig)
+            # Display with matplotlib
+            fig, ax = plt.subplots(figsize=(10, 5))
+            ax.imshow(wc, interpolation='bilinear')
+            ax.axis("off")
+            st.pyplot(fig)
+        else:
+            st.info("No free-text responses available")
 
 # -----------------------------
 # Row 3
@@ -285,7 +344,7 @@ with tab4:
         st.subheader("Dimension Heatmap")
 
         # Compute correlation
-        corr = dim_scores.drop(columns=["Personality"]).corr()
+        corr = dim_scores.drop(columns=["PersonalityType"]).corr()
 
         fig_heatmap = px.imshow(
             corr,
@@ -307,7 +366,7 @@ with tab4:
     with col6.container(border=True, height="stretch"):
         st.subheader("Dimension Spider Chart")
 
-        avg_scores = dim_scores.drop(columns=["Personality"]).mean().reset_index()
+        avg_scores = dim_scores.drop(columns=["PersonalityType"]).mean().reset_index()
         avg_scores.columns = ["Dimension", "Score"]
 
         fig_radar = px.line_polar(avg_scores, r="Score", theta="Dimension", line_close=True)
