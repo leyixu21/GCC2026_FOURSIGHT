@@ -4,10 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-from io import StringIO
-import gdown
-import os
-import tempfile
 
 st.set_page_config(layout="wide")
 
@@ -73,29 +69,19 @@ DIMENSION_TO_PERSONALITY = {
 # -----------------------------
 @st.cache_data
 def load_data():
-    """Load data from Google Drive or local files"""
-    # Google Drive file IDs
-    DECISIONS_ID = "1CAH-4YQGR7Wjz_iFXNCgbWdin-Lr55h-"
-    PLAYERS_ID = "1IPhAbKp40hYUuo32x6Oyn9lSnDesBtsS"
+    """Load data from GitHub or local files"""
+    # GitHub raw content URLs
+    GITHUB_BASE = "https://raw.githubusercontent.com/leyixu21/GCC2026_FOURSIGHT/main"
+    DECISIONS_URL = f"{GITHUB_BASE}/data/feedback_round1/decisions_rows.csv"
+    PLAYERS_URL = f"{GITHUB_BASE}/data/feedback_round1/players_rows.csv"
     
     try:
-        # Try to download from Google Drive
-        with tempfile.TemporaryDirectory() as tmpdir:
-            decisions_path = os.path.join(tmpdir, "decisions_rows.csv")
-            players_path = os.path.join(tmpdir, "players_rows.csv")
-            
-            def download_from_gdrive(file_id, output_name):
-                url = f'https://drive.google.com/uc?id={file_id}'
-                gdown.download(url, output_name, quiet=True)
-            
-            download_from_gdrive(DECISIONS_ID, decisions_path)
-            download_from_gdrive(PLAYERS_ID, players_path)
-            
-            decisions = pd.read_csv(decisions_path)
-            players = pd.read_csv(players_path)
+        # Try to load from GitHub
+        decisions = pd.read_csv(DECISIONS_URL)
+        players = pd.read_csv(PLAYERS_URL)
     except Exception as e:
         # Fallback to local files
-        st.warning(f"Could not load from Google Drive: {e}. Using local files...")
+        st.warning(f"Could not load from GitHub: {e}. Using local files...")
         decisions = pd.read_csv("data/feedback_round1/decisions_rows.csv")
         players = pd.read_csv("data/feedback_round1/players_rows.csv")
     
@@ -103,29 +89,19 @@ def load_data():
 
 @st.cache_data
 def load_questions_and_options():
-    """Load questions and options reference data from Google Drive or local files"""
-    # Google Drive file IDs
-    QUESTIONS_ID = "11-pbVsGkjH5dbJbpuj5-7LzBZibY8auJ"
-    OPTIONS_ID = "1YIVOEORl__jN5Jbc-hGbhu_TScdtv4sY"
-    
-    def download_from_gdrive(file_id, output_name):
-        url = f'https://drive.google.com/uc?id={file_id}'
-        gdown.download(url, output_name, quiet=True)
+    """Load questions and options reference data from GitHub or local files"""
+    # GitHub raw content URLs
+    GITHUB_BASE = "https://raw.githubusercontent.com/leyixu21/GCC2026_FOURSIGHT/main"
+    QUESTIONS_URL = f"{GITHUB_BASE}/data/feedback_round1/questions_rows.csv"
+    OPTIONS_URL = f"{GITHUB_BASE}/data/feedback_round1/options_rows.csv"
     
     try:
-        # Try to download from Google Drive
-        with tempfile.TemporaryDirectory() as tmpdir:
-            questions_path = os.path.join(tmpdir, "questions_rows.csv")
-            options_path = os.path.join(tmpdir, "options_rows.csv")
-            
-            download_from_gdrive(QUESTIONS_ID, questions_path)
-            download_from_gdrive(OPTIONS_ID, options_path)
-            
-            questions = pd.read_csv(questions_path)
-            options = pd.read_csv(options_path)
+        # Try to load from GitHub
+        questions = pd.read_csv(QUESTIONS_URL)
+        options = pd.read_csv(OPTIONS_URL)
     except Exception as e:
         # Fallback to local files
-        st.warning(f"Could not load from Google Drive: {e}. Using local files...")
+        st.warning(f"Could not load from GitHub: {e}. Using local files...")
         questions = pd.read_csv("data/feedback_round1/questions_rows.csv")
         options = pd.read_csv("data/feedback_round1/options_rows.csv")
     
