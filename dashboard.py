@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from io import StringIO
-import streamlit_authenticator as stauth
 import gdown
 import os
 import tempfile
