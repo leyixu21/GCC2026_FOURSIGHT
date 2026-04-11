@@ -5,8 +5,46 @@ import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from io import StringIO
+import streamlit_authenticator as stauth
 
 st.set_page_config(layout="wide")
+
+# ===========================
+# AUTHENTICATION SECTION
+# ===========================
+# Simple authentication - replace with more robust method for production
+def check_authority_login():
+    """Simple login check for authorities"""
+    # Try to use secrets first (for Streamlit Cloud)
+    try:
+        auth_password = st.secrets["authority_password"]
+    except:
+        # Fallback to environment variable or default
+        auth_password = "authority2026"  # Change this to your preferred password
+    
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+    
+    if not st.session_state.authenticated:
+        st.warning("⚠️ This dashboard is for authorized personnel only.")
+        col1, col2, col3 = st.columns([1, 1, 1])
+        
+        with col2:
+            st.markdown("### Authority Login")
+            password = st.text_input("Enter password:", type="password", key="auth_password")
+            
+            if st.button("Login", key="login_button"):
+                if password == auth_password:
+                    st.session_state.authenticated = True
+                    st.success("✓ Login successful!")
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect password. Access denied.")
+        
+        st.stop()
+
+# Check authentication
+check_authority_login()
 
 # Personality mapping
 PERSONALITY_MAPPING = {
@@ -49,6 +87,19 @@ def load_data():
     return decisions, players
 
 @st.cache_data
+def load_questions_and_options():
+    """Load questions and options reference data"""
+    try:
+        questions = pd.read_csv(StringIO(st.secrets["questions_data"]))
+        options = pd.read_csv(StringIO(st.secrets["options_data"]))
+    except (FileNotFoundError, KeyError):
+        # Fallback to local files
+        questions = pd.read_csv("data/feedback_round1/questions_rows.csv")
+        options = pd.read_csv("data/feedback_round1/options_rows.csv")
+    
+    return questions, options
+
+@st.cache_data
 def calculate_personality(dimension_scores):
     """
     Calculate dominant personality from dimension scores.
@@ -61,8 +112,28 @@ def calculate_personality(dimension_scores):
     return dimension_scores.idxmax()
 
 decisions, players = load_data()
+questions, options = load_questions_and_options()
 
-# Transform decisions data: pivot to get one row per player with Q1-Q5 answers
+# ===========================
+# MUNICIPALITY FILTER
+# ===========================
+st.title("Player Behavior Dashboard")
+
+col_title, col_filter = st.columns([3, 1])
+with col_filter:
+    municipalities = ["All"] + sorted(players["municipality"].unique().tolist())
+    selected_municipality = st.selectbox(
+        "Filter by Municipality:",
+        municipalities,
+        key="municipality_filter"
+    )
+
+# Filter data based on selected municipality
+if selected_municipality != "All":
+    filtered_players_ids = players[players["municipality"] == selected_municipality]["id"].tolist()
+    decisions = decisions[decisions["player_id"].isin(filtered_players_ids)]
+    players = players[players["municipality"] == selected_municipality]
+
 # Group by player_id and question_id, then pivot
 decisions_pivot = decisions.pivot_table(
     index='player_id',
@@ -112,8 +183,6 @@ base_responses = data[[f"Q{i}" for i in range(1, 6)]]
 dim_scores = data[['score_react', 'score_trust', 'score_indep', 'score_adapt', 'score_mobil', 'score_safety']].copy()
 dim_scores.columns = ['REACT', 'TRUST', 'INDEPENDENT', 'ADAPT', 'MOBILITY', 'SAFETY']
 dim_scores["PersonalityType"] = data["PersonalityType"].values
-
-st.title("Player Behavior Dashboard")
 
 tab1, tab2, tab3, tab4 = st.tabs([
     "Personality Overview",
@@ -255,83 +324,165 @@ with tab2:
 # -----------------------------
 with tab3:
     st.header("Response Patterns")
-
-    # col3, col4 = st.columns(2)
-    col3, col4 = st.columns([3,2])
-
-    # Define a color map for all possible answers
+    
+    # Define color map for answers
     color_map = {
         'A': '#65b0e4',  # blue
         'B': '#ffa250',  # orange
         'C': '#5dd25d',  # green
         'D': '#e36364',  # red
-        'E': '#aa87cb'   # purple (for questions with 5 answers)
+        'E': '#aa87cb'   # purple
     }
-
-    with col3.container(border=True, height="stretch"):
-        st.subheader("Question Answer Distribution")
-
-        questions = [f"Q{i}" for i in range(1, 6)]
-        # Count responses for each answer per question
-        stack_df = data[questions].apply(lambda x: x.value_counts()).fillna(0).T
-
-        legend_order = ['A', 'B', 'C', 'D', 'E']  # Include all possible answers
-
-        fig_stack = go.Figure()
-
-        # Loop through all answers present in the data
-        for ans in stack_df.columns:
-            fig_stack.add_bar(
-                y=stack_df.index,
-                x=stack_df[ans],
-                name=ans,
-                orientation='h',
-                marker_color=color_map.get(ans, '#7f7f7f')  # fallback gray if missing
+    
+    dimension_cols_short = ['react', 'trust', 'indep', 'adapt', 'mobil', 'safety']
+    dimension_names = ['REACT', 'TRUST', 'INDEPENDENT', 'ADAPT', 'MOBILITY', 'SAFETY']
+    
+    # Sort questions by order_index
+    questions_sorted = questions.sort_values('order_index')
+    
+    for _, q_row in questions_sorted.iterrows():
+        question_id = q_row['id']
+        question_text = q_row['question_text']
+        order_idx = q_row['order_index']
+        
+        # Get option texts for labels
+        q_options = options[options['question_id'] == question_id].copy()
+        q_options_dict = dict(zip(q_options['option_key'], q_options['option_text']))
+        
+        # Get responses for this question from decisions data
+        q_decisions = decisions[decisions['question_id'] == question_id]
+        all_options = sorted(q_options['option_key'].unique())
+        
+        # Create 2x2 grid layout
+        col_left, col_right = st.columns([1, 1])
+        
+        # ============ ROW 1 (TOP) ============
+        # LEFT (ROW 1): Question & Answer Options Panel
+        with col_left.container(border=True):
+            st.markdown(f"### Question {order_idx}")
+            st.write(question_text)
+            
+            st.markdown("**Answer Options:**")
+            for opt_key in all_options:
+                opt_text = q_options_dict.get(opt_key, '')
+                # Handle NaN and empty values - show "Other" for placeholder options
+                if pd.notna(opt_text):
+                    opt_text_str = str(opt_text).strip()
+                else:
+                    opt_text_str = ''
+                
+                if opt_text_str:
+                    st.markdown(f"- **{opt_key}**: {opt_text_str}")
+                else:
+                    # Show "Other" for options without text
+                    st.markdown(f"- **{opt_key}**: Other")
+        
+        # RIGHT (ROW 1): Dimension Scores Table
+        with col_right.container(border=True):
+            st.subheader("Dimension Scores")
+            
+            # Create dimension scores table for each option
+            dimension_data = []
+            
+            for opt_key in all_options:
+                opt_row = q_options[q_options['option_key'] == opt_key]
+                if not opt_row.empty:
+                    dimension_values = []
+                    for dim_col in dimension_cols_short:
+                        col_name = f'weight_{dim_col}'
+                        if col_name in opt_row.columns:
+                            dimension_values.append(int(opt_row[col_name].values[0]))
+                        else:
+                            dimension_values.append(0)
+                    
+                    # Add row to table data
+                    row_dict = {'Option': opt_key}
+                    for i, dim_name in enumerate(dimension_names):
+                        row_dict[dim_name] = dimension_values[i]
+                    dimension_data.append(row_dict)
+            
+            if dimension_data:
+                df_dimensions = pd.DataFrame(dimension_data)
+                
+                # Display as interactive table
+                st.dataframe(
+                    df_dimensions.set_index('Option'),
+                    use_container_width=True,
+                    height=200
+                )
+        
+        # ============ ROW 2 (BOTTOM) ============
+        # LEFT (ROW 2): Answer Distribution Chart
+        with col_left.container(border=True):
+            st.subheader("Answer Distribution")
+            
+            # Count responses for this question
+            answer_counts = q_decisions['option_chosen'].value_counts().reset_index()
+            answer_counts.columns = ['Option', 'Count']
+            
+            # Ensure all possible options are shown, even with 0 counts
+            answer_counts = answer_counts.set_index('Option').reindex(all_options, fill_value=0).reset_index()
+            answer_counts['Count'] = answer_counts['Count'].astype(int)
+            
+            # Add full text to answer_counts
+            answer_counts['Option_Text'] = answer_counts['Option'].map(
+                lambda x: f"{x}: {q_options_dict.get(x, 'N/A')}"
             )
-
-        fig_stack.update_layout(
-            barmode='stack',
-            xaxis_title="Response Count",
-            yaxis_title="Question",
-            legend_title="Answer",
-            legend=dict(font=dict(size=20)),
-            legend_traceorder="normal",  # Keep the order as added
-            xaxis=dict(tickfont=dict(size=15)),
-            yaxis=dict(tickfont=dict(size=15))
-        )
-
-        st.plotly_chart(fig_stack, use_container_width=True)
-
-
-
-    with col4.container(border=True, height="stretch"):
-        st.subheader("Out-of-the-Box Answers")
-
-        # Combine all free-text responses into one string (from decisions table)
-        text_data = " ".join(
-            decisions['other_text']
-            .fillna("")              # remove NaNs
-            .astype(str)             # ensure all are strings
-            .values
-        ).strip()
-
-        # Generate word cloud only if there is text data
-        if text_data and len(text_data.split()) > 0:
-            wc = WordCloud(
-                width=800,
-                height=600,
-                background_color="white",
-                colormap="inferno",
-                max_words=200
-            ).generate(text_data)
-
-            # Display with matplotlib
-            fig, ax = plt.subplots(figsize=(10, 5))
-            ax.imshow(wc, interpolation='bilinear')
-            ax.axis("off")
-            st.pyplot(fig)
-        else:
-            st.info("No free-text responses available")
+            
+            # Create bar chart with category order
+            fig_answer = px.bar(
+                answer_counts,
+                x='Option',
+                y='Count',
+                color='Option',
+                color_discrete_map=color_map,
+                hover_data={'Option_Text': False},
+                hover_name='Option_Text',
+                category_orders={'Option': all_options}
+            )
+            
+            fig_answer.update_layout(
+                xaxis_title="<b>Answer Option</b>",
+                yaxis_title="<b>Number of Responses</b>",
+                xaxis=dict(tickfont=dict(size=12), type='category', tickangle=0),
+                yaxis=dict(tickfont=dict(size=12), tickformat='d'),
+                showlegend=False,
+                hovermode='x unified',
+                bargap=0.2
+            )
+            
+            st.plotly_chart(fig_answer, use_container_width=True)
+        
+        # RIGHT (ROW 2): Custom Responses Word Cloud
+        with col_right.container(border=True):
+            st.subheader("Custom Responses")
+            
+            # Get free-text responses for this question
+            q_decisions_with_text = q_decisions[q_decisions['is_other'] == True]
+            text_data = " ".join(
+                q_decisions_with_text['other_text']
+                .fillna("")
+                .astype(str)
+                .values
+            ).strip()
+            
+            if text_data and len(text_data.split()) > 0:
+                wc = WordCloud(
+                    width=400,
+                    height=300,
+                    background_color="white",
+                    colormap="inferno",
+                    max_words=100
+                ).generate(text_data)
+                
+                fig, ax = plt.subplots(figsize=(5, 3))
+                ax.imshow(wc, interpolation='bilinear')
+                ax.axis("off")
+                st.pyplot(fig, use_container_width=True)
+            else:
+                st.info("No custom responses")
+        
+        st.divider()
 
 # -----------------------------
 # Row 3
@@ -349,8 +500,9 @@ with tab4:
         fig_heatmap = px.imshow(
             corr,
             text_auto=".2f",             # show numbers rounded to 2 decimals
-            color_continuous_scale='Oranges',
-            aspect="auto"
+            color_continuous_scale='RdBu_r',
+            aspect="auto",
+            color_continuous_midpoint=0
         )
 
         fig_heatmap.update_layout(
