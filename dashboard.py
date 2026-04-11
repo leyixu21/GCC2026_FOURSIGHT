@@ -6,6 +6,9 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from io import StringIO
 import streamlit_authenticator as stauth
+import gdown
+import os
+import tempfile
 
 st.set_page_config(layout="wide")
 
@@ -71,16 +74,29 @@ DIMENSION_TO_PERSONALITY = {
 # -----------------------------
 @st.cache_data
 def load_data():
-    """Load data from secrets or local files"""
+    """Load data from Google Drive or local files"""
+    # Google Drive file IDs
+    DECISIONS_ID = "1CAH-4YQGR7Wjz_iFXNCgbWdin-Lr55h-"
+    PLAYERS_ID = "1IPhAbKp40hYUuo32x6Oyn9lSnDesBtsS"
+    
     try:
-        # Try to load from Streamlit secrets (for Streamlit Cloud deployment)
-        decisions_csv = st.secrets["decisions_data"]
-        players_csv = st.secrets["players_data"]
-        
-        decisions = pd.read_csv(StringIO(decisions_csv))
-        players = pd.read_csv(StringIO(players_csv))
-    except (FileNotFoundError, KeyError):
-        # Fallback to local files (for local development)
+        # Try to download from Google Drive
+        with tempfile.TemporaryDirectory() as tmpdir:
+            decisions_path = os.path.join(tmpdir, "decisions_rows.csv")
+            players_path = os.path.join(tmpdir, "players_rows.csv")
+            
+            def download_from_gdrive(file_id, output_name):
+                url = f'https://drive.google.com/uc?id={file_id}'
+                gdown.download(url, output_name, quiet=True)
+            
+            download_from_gdrive(DECISIONS_ID, decisions_path)
+            download_from_gdrive(PLAYERS_ID, players_path)
+            
+            decisions = pd.read_csv(decisions_path)
+            players = pd.read_csv(players_path)
+    except Exception as e:
+        # Fallback to local files
+        st.warning(f"Could not load from Google Drive: {e}. Using local files...")
         decisions = pd.read_csv("data/feedback_round1/decisions_rows.csv")
         players = pd.read_csv("data/feedback_round1/players_rows.csv")
     
@@ -88,12 +104,29 @@ def load_data():
 
 @st.cache_data
 def load_questions_and_options():
-    """Load questions and options reference data"""
+    """Load questions and options reference data from Google Drive or local files"""
+    # Google Drive file IDs
+    QUESTIONS_ID = "11-pbVsGkjH5dbJbpuj5-7LzBZibY8auJ"
+    OPTIONS_ID = "1YIVOEORl__jN5Jbc-hGbhu_TScdtv4sY"
+    
+    def download_from_gdrive(file_id, output_name):
+        url = f'https://drive.google.com/uc?id={file_id}'
+        gdown.download(url, output_name, quiet=True)
+    
     try:
-        questions = pd.read_csv(StringIO(st.secrets["questions_data"]))
-        options = pd.read_csv(StringIO(st.secrets["options_data"]))
-    except (FileNotFoundError, KeyError):
+        # Try to download from Google Drive
+        with tempfile.TemporaryDirectory() as tmpdir:
+            questions_path = os.path.join(tmpdir, "questions_rows.csv")
+            options_path = os.path.join(tmpdir, "options_rows.csv")
+            
+            download_from_gdrive(QUESTIONS_ID, questions_path)
+            download_from_gdrive(OPTIONS_ID, options_path)
+            
+            questions = pd.read_csv(questions_path)
+            options = pd.read_csv(options_path)
+    except Exception as e:
         # Fallback to local files
+        st.warning(f"Could not load from Google Drive: {e}. Using local files...")
         questions = pd.read_csv("data/feedback_round1/questions_rows.csv")
         options = pd.read_csv("data/feedback_round1/options_rows.csv")
     
