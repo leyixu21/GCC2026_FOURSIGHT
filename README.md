@@ -1,8 +1,6 @@
 # FOURSIGHT Dashboard
 
-This repository contains the authority dashboard developed by Team FOURSIGHT for the Mass Evacuation challenge in Geospatial Challenge Camp 2026.
-
-Challenge website: https://challenge-camp.geoportti.fi/en/latest/
+This repository contains the authority dashboard developed by Team FOURSIGHT for the Mass Evacuation challenge in [Geospatial Challenge Camp 2026](https://challenge-camp.geoportti.fi/en/latest/)
 
 Our team solution is **Game-based Participatory Data Collection for Evacuation Planning**. The overall solution has two connected parts:
 
@@ -10,6 +8,10 @@ Our team solution is **Game-based Participatory Data Collection for Evacuation P
 2. A dashboard for authorities built on the data collected from the game
 
 This repository is for the **dashboard** part of the solution.
+
+Please check the deployed dashboard [HERE] (https://gcc2026-foursight-dashboard.streamlit.app/) in Streamlit with the password: `2026`.
+
+Note: The data used in this dashboard is fake data only for demonstration.
 
 ## Project Purpose
 
@@ -24,7 +26,7 @@ The Streamlit dashboard provides several views for authority users:
 3. Question-by-question response patterns with authority-focused interpretation
 4. Behavioral insights across dimensions, including comparison and correlation views
 
-Note: The data used in this dashboard is fake data only for demonstration.
+
 
 ## Repository Structure
 

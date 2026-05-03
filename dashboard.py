@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-from data.municipality_population_and_coords import municipality_data
+from municipality_population_and_coords import municipality_data
 
 st.set_page_config(layout="wide")
 
