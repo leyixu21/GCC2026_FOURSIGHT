@@ -1,0 +1,22 @@
+id,session_token,nickname,age,gender,municipality,has_children,has_elderly,has_pets,has_evacuation_experience,created_at
+00046bfb-db8c-4deb-84a3-1ff39f716268,fab9be79-9b19-4770-a2b1-5733cfa46408,Sunday,45,female,Espoo,true,false,true,false,2026-05-02 17:10:30.594828
+2ad3abd7-0963-4af3-a39a-5ab0cc131ef6,1c4c3e6d-26a3-41cd-8182-7b3b392fe0e0,Dog,52,female,Helsinki,false,false,true,true,2026-05-02 17:39:56.312875
+36e6f6e1-5326-42b2-aaa0-7f21b40cf4e3,69384c60-2f05-4788-a381-b85acd310b69,pöö,28,female,Turku,false,false,true,false,2026-05-02 13:21:44.958448
+4270ae2f-cb92-4418-b5d5-889dc74c5142,2cc04f40-975b-4d93-b46c-1ab98ca5d45b,DL,52,male,Pori,false,true,true,true,2026-05-02 18:11:58.56424
+4992c86d-c8a4-48fc-ad2e-30318d195820,578dcf93-0ec5-4924-a429-1792a5d6d05d,mr. guy,40,other,Helsinki,true,false,false,true,2026-05-02 16:59:15.374009
+5d03c388-4c8a-4922-a6ee-ac6f6f347ffd,c31674fa-fec7-45b8-80d2-3c98da2fc29c,ScarletWitch,42,female,Suomussalmi,true,false,true,false,2026-05-02 18:05:50.549432
+70fd3550-2e6e-4d0c-973c-a4add846c001,a12d775b-37ae-49a1-9861-73d0840a279c,team1,25,female,Turku,false,false,false,false,2026-05-02 08:11:00.374478
+736ce41f-47d5-4e00-94f7-2f163ce37f19,06d4e013-8ef1-4fc2-bb60-9a1b8053d4c6,Shirin,33,female,Helsinki,false,false,false,true,2026-05-02 12:08:14.10023
+83dca226-6142-4e12-b0e3-60160c6b287f,dfa89532-85a7-4aec-bdbf-1e96e1c98813,WB,35,female,Janakkala,false,false,false,false,2026-05-02 18:09:29.700756
+9232d2c0-0021-4641-836b-d995a9200783,4eada775-a7b0-45f8-b27c-71bf3f8954a7,Sarah,27,other,Espoo,false,false,true,true,2026-05-02 17:06:17.141167
+9822215c-1402-4cb2-8c34-de9f85de5fd5,37a3e61b-6880-4c5f-903a-533875fe2408,ABC,28,female,Akaa,false,false,false,false,2026-05-01 21:30:26.467211
+9937512e-383a-4ceb-938f-38bd8eb09c76,ad892823-b83e-4ed8-8071-949793a1f858,Hihi,45,male,Raasepori,false,false,true,true,2026-05-02 18:14:09.924576
+a3163fee-d57e-4579-8188-7d4d3a8cdc7d,14cabfe1-6b3d-4a57-b06f-827ef64aa817,Joonas,55,male,Hattula,true,false,false,false,2026-05-02 18:07:46.10851
+a373a9bf-5874-4cbb-9d5f-e07b416d432d,c2e68777-36d7-4f1c-abf2-f3755eec8e67,Khanh Pham,28,female,Espoo,false,false,false,false,2026-05-01 21:41:52.338106
+ab44cf6d-980a-4a88-85bf-495db2a185e7,4b2b18aa-7c5d-4017-8525-756ed3d8479b,miss,24,female,Vantaa,false,true,false,true,2026-05-02 17:03:21.477234
+b5d15cad-06ce-4b58-a8ae-9bcb5d04d25e,da2409cd-a4b3-4363-842d-e3fbdabd41fc,Cat,60,male,Eura,false,true,false,true,2026-05-02 17:38:32.671516
+d131ff6d-4848-43d6-a4b1-271ec38f6046,c1c18aaa-7454-4d43-aa75-25873690b337,Leyi,28,female,Helsinki,false,false,false,false,2026-05-02 08:22:51.54771
+d8d919d9-15a2-4acd-b19c-83f737a03868,2b1774d7-097f-41ad-bef9-af4ae0332275,foursight,25,female,Helsinki,false,false,false,false,2026-05-02 08:06:15.492162
+da0894ee-8aa4-4dfe-92a3-37eeb3b8dbab,56f2ded9-78f8-426b-8995-a8478f353fd4,test,56,male,Alajärvi,false,true,true,false,2026-05-02 13:29:55.558191
+da167a23-d0d6-4169-8ff6-4b3c98010913,f2ef7783-1f9e-4832-87c1-b25a80e210a0,Leon,22,male,Alavus,false,true,false,false,2026-05-02 18:01:34.460391
+fbbefbfb-ba10-4d20-9f1a-c24b5397a1d2,a8d22f65-ddfe-49dc-881b-70b17d262eba,Nguyen,20,female,Alavieska,false,false,true,false,2026-05-01 22:41:30.82956

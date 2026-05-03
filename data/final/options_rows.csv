@@ -1,0 +1,68 @@
+id,question_id,option_key,option_text,weight_react,weight_trust,weight_indep,weight_mobil,weight_safety,weight_adapt,weight_commu,weight_prep
+03635ee4-0d28-4060-b4ca-49df31ff5985,fb464f5a-ba92-494a-bde0-25bbfca054ea,C,"Team up with someone, but still make your own decisions along the way.",0,0,1,0,0,1,0,0
+06bfa80d-c27a-4ca8-ba78-d43b0d48febc,e755dcfa-e6b9-4784-9281-7b047e9e18b6,E,"I would stay as close to home as possible, I don't want to go far.",0,0,0,-2,-2,0,0,0
+0b032366-d984-4909-9f10-1a2cbb1748fd,dab4be99-b386-4a76-a81f-1869bcc49cd4,B,"Go through your checklist, finish packing, and head out the door.",0,0,0,0,0,2,0,1
+0d10cf45-408d-4cd6-bd87-43415d127fba,8138467a-9e6a-46ed-ac5c-aa51d8d800d7,B,Look for more information before deciding.,1,0,0,0,0,1,0,0
+1818b384-6e03-47e7-aa32-c1215b51f298,be7bf6f1-30e7-4d16-a1d5-c7138f2f7cb0,D,Feel stuck and struggle to decide what to do next.,0,0,-2,-2,0,-2,0,0
+186364bb-fff9-4cb1-8b86-e22822e46f62,2dab8d55-7958-44f6-a547-a43f6b7c5efc,A,Use your own private vehicle (if available) to bring more things.,0,-2,0,-2,0,0,0,2
+268b6708-3fb9-4d58-8dda-cdf6c7c42781,2dab8d55-7958-44f6-a547-a43f6b7c5efc,C,Take public transport but try to carry all the things you need.,0,1,0,-1,0,0,0,1
+2a323a4c-dfcd-417e-a056-be08d75284fc,fb464f5a-ba92-494a-bde0-25bbfca054ea,D,Continue alone and rely on your own judgment.,0,0,2,0,0,-1,0,0
+317b2a3c-bcd1-4827-bbd6-9b6a6470b2b0,e755dcfa-e6b9-4784-9281-7b047e9e18b6,D,"Outside Finland, to another country where I could stay safely.",0,0,0,2,0,0,0,0
+353e6371-ad1e-4c22-a5e2-f5e7327eb532,fb464f5a-ba92-494a-bde0-25bbfca054ea,B,Find someone nearby and suggest moving together for mutual support.,0,0,0,0,0,2,0,0
+37626f66-91d4-4242-8a34-c2cea3e03d20,96b32aff-2ec7-4324-96bd-4df9db09f551,D,"Take note of how many bags others bring, and might consider to bring an extra one yourself too.",1,0,0,0,0,0,-2,0
+3ec77c1b-27cc-44a6-814c-80f1df2f58c7,3cb3dfd5-28dc-43f5-9ef2-3029b3f05781,C,Pause and consider if you might get any risk before deciding.,0,0,0,0,1,0,0,0
+42ab42a1-bee4-408d-917e-1dfe05fdb538,96b32aff-2ec7-4324-96bd-4df9db09f551,A,Say nothing. It is not your place to police other people.,0,0,0,0,0,0,0,0
+4b088a5c-a74b-4f47-99e8-32cc39a554cb,e7c59f31-e58b-4016-afe8-43cf6b23289e,C,"Look for more information from other sources first, but won't do anything until you understand the situation better.",0,0,0,0,0,0,0,0
+4b1bd95f-a2d3-4a0d-a86f-33a0dcef2ae2,3cb3dfd5-28dc-43f5-9ef2-3029b3f05781,B,"Call the police, then continue on your way.",0,0,0,0,0,0,1,0
+5188cd20-19aa-4a5e-aeb0-8b8e105886a5,0f620fd5-626b-4a2e-a0ab-bcb6a6db8238,E,Rely on my own judgment and past experience.,0,0,2,0,0,0,0,0
+523d1adb-1334-488f-8c2e-4d71daca5f7a,be7bf6f1-30e7-4d16-a1d5-c7138f2f7cb0,B,Look around and discuss with other people on what to do.,0,0,0,0,0,1,0,0
+58143ad2-c2dd-4311-b7e5-0fa4a38f7796,e755dcfa-e6b9-4784-9281-7b047e9e18b6,A,To an official shelter or evacuation center in the area.,0,0,0,1,2,0,0,0
+599503f7-b102-4e74-91f1-c6d7067501a5,96b32aff-2ec7-4324-96bd-4df9db09f551,B,Speak up and point to the sign. The rule is there for everyone.,1,0,0,0,0,0,2,0
+688d3996-5650-483f-bb90-401022073e9c,1ce7dcd5-39cc-43c7-a883-d127cd3d038e,A,Quite confident. I have knowledge in this and trust myself in such situations.,0,0,0,0,0,0,0,2
+6f7d5050-6c82-4a19-9f46-d2d67e715ca0,b68c7448-6912-444a-84ad-bc198a165f27,D,"Take the faster route. Official warnings are not always up to date, and you trust your own judgment.",0,-2,0,-2,0,0,0,0
+7075acc3-8a29-478a-9f8f-975f7f62199f,a68b929c-9522-4fc2-b348-646586d18273,C,Stay in your place and wait for your turn.,0,0,0,0,0,0,0,0
+7116a870-ebb1-47b8-ac01-6419ff412040,b045d423-9856-453b-98f5-7d11d1af44b7,C,Decline the offer because you feel uncomfortable causing any inconvenience to their family.,0,0,1,0,0,0,0,0
+739008d4-aa59-434e-b773-67190a7d96c4,27c438db-e4dc-4d89-bb16-796c674fa81d,D,"Plan to go, but you need more time to sort things at home first.",0,0,0,0,0,0,0,0
+77352e0e-d3ec-4124-85f3-18af3bb5ca10,e755dcfa-e6b9-4784-9281-7b047e9e18b6,F,I'm not sure. I don't have a clear plan or destination in mind.,0,0,0,0,-1,0,0,0
+77f74ab9-6bf4-4df2-b687-b51b423a5fa3,b045d423-9856-453b-98f5-7d11d1af44b7,A,Accept the offer and ride with them to get closer to your destination.,0,0,-1,0,0,0,2,0
+7bbd157d-5fec-40f0-894e-cc0482fa20eb,dab4be99-b386-4a76-a81f-1869bcc49cd4,A,"Grab your bag and leave right away, you can figure out what's missing later.",0,0,0,0,0,1,0,1
+7c0976fd-8ed6-4977-8d96-d6d1886f0023,3cb3dfd5-28dc-43f5-9ef2-3029b3f05781,D,Focus on your own move.,0,0,0,0,2,0,-2,0
+7d8750c6-0bed-45b6-b1ab-69439b84bf1d,8138467a-9e6a-46ed-ac5c-aa51d8d800d7,C,Wait nearby and hope the destination will accept you soon.,0,0,0,0,0,-2,0,0
+843a30b9-f040-4383-92f1-7afe85ddc778,27c438db-e4dc-4d89-bb16-796c674fa81d,C,Try to get more information about the situation before deciding whether to go.,0,-1,0,0,0,0,0,0
+86ecb2bd-fe19-4f46-a761-0ef6b4bd0b99,27c438db-e4dc-4d89-bb16-796c674fa81d,A,Drop everything and go to the assembly point right now. Time is gold.,0,2,0,2,0,0,0,0
+88f85833-7c10-464b-ac2c-c1b851f39ec5,dab4be99-b386-4a76-a81f-1869bcc49cd4,D,Find yourself not moving yet. There is a lot going through your head.,0,0,0,0,0,-2,0,-2
+8c9ddf22-86cd-4494-982c-7c7beb6976fa,3cb3dfd5-28dc-43f5-9ef2-3029b3f05781,A,Stop and try to help them.,0,0,0,0,-2,0,2,0
+8f0a78a5-7832-4e5c-b5d9-b1e9b0858bc5,a68b929c-9522-4fc2-b348-646586d18273,D,Encourage someone else who may need it more to take the spot.,0,0,0,0,0,0,2,0
+9200d445-1b7e-4bfd-9644-2f1cb968564b,fb464f5a-ba92-494a-bde0-25bbfca054ea,A,"Wait and watch where the crowd goes, then follow.",0,0,-1,0,0,1,0,0
+9535866b-b2b1-4552-bbb6-87a8c9136443,1ce7dcd5-39cc-43c7-a883-d127cd3d038e,B,Somewhat confident. I try to make right decisions even when I am not fully certain.,0,0,0,0,0,0,0,1
+9b1a7f4f-ca9c-49e7-a3f2-ee04959f7646,0f620fd5-626b-4a2e-a0ab-bcb6a6db8238,A,"Rely on official authorities (government alerts, emergency messages, official statements).",0,0,-2,0,0,0,0,0
+9c38227c-0adc-4ae8-a6ba-2f291cab6510,8138467a-9e6a-46ed-ac5c-aa51d8d800d7,A,Quickly choose another destination and leave immediately.,2,0,0,0,0,2,0,0
+a7326171-55e3-4a95-8ba8-475ee91d7842,1ce7dcd5-39cc-43c7-a883-d127cd3d038e,D,Not confident. I would need more knowledge or training to handle it well.,0,0,0,0,0,0,0,-1
+ac58ea3d-add8-4cbd-8f8f-5a59da72adbb,8138467a-9e6a-46ed-ac5c-aa51d8d800d7,D,Feel overwhelmed and unable to decide what to do next.,0,0,0,0,0,-2,0,0
+ad649a36-8100-45ea-8973-50d432b95bd6,e7c59f31-e58b-4016-afe8-43cf6b23289e,D,"Wait for the next official update. Until then, carry on with your normal day.",-2,2,0,0,0,0,0,-2
+aefd865d-33c3-472a-aa99-8992563e8e17,1ce7dcd5-39cc-43c7-a883-d127cd3d038e,C,Uncertain. Situations like this are complex and it is hard to know the right decision.,0,0,0,0,0,0,0,0
+af938b2c-c57a-4cbe-8112-1f597228126b,96b32aff-2ec7-4324-96bd-4df9db09f551,C,"Stay quiet, but if the bus gets full and people get left behind, you feel it was their fault.",0,0,0,0,0,0,-1,0
+b1b17513-dadd-487c-85e8-6c1dac27365d,e7c59f31-e58b-4016-afe8-43cf6b23289e,A,"Start packing and preparing to leave, even though no evacuation has been ordered yet.",2,-2,0,0,0,0,0,2
+b58ba533-4f6e-4c5e-9901-bf8a50d5b0d2,be7bf6f1-30e7-4d16-a1d5-c7138f2f7cb0,C,"Quickly find another option, such as bus, train, bike, or shared ride.",0,0,2,2,0,2,0,0
+bb8f7016-6956-4065-94b7-cd51628ead59,2dab8d55-7958-44f6-a547-a43f6b7c5efc,B,Take public transport with essentials only.,0,2,0,2,0,0,0,0
+bd009ece-6ac5-49a0-880b-d261fb05e6e9,fb464f5a-ba92-494a-bde0-25bbfca054ea,E,Stay where you are and wait for someone to come and guide you.,0,0,-2,0,0,-2,0,0
+bfc044f9-e2c6-487c-97b4-f4db7bbbfa2a,a68b929c-9522-4fc2-b348-646586d18273,A,Step forward and take the spot immediately to leave sooner.,2,0,0,2,0,0,-2,0
+c52e3176-3c3a-453c-a92e-6bd6f72fded3,be7bf6f1-30e7-4d16-a1d5-c7138f2f7cb0,A,"Wait and hope the situation improves, so you can move again.",0,0,-1,-2,0,-1,0,0
+ce82be0f-462a-414c-b654-12bf7e390074,b68c7448-6912-444a-84ad-bc198a165f27,C,Take the faster route. You're aware of the warning but willing to take the chance and stay alert.,0,-1,0,-1,0,0,0,0
+d23b001a-6bcd-4b08-b602-43b64361925a,27c438db-e4dc-4d89-bb16-796c674fa81d,F,Stay home. You don't trust that leaving is the right move yet.,0,-2,0,-2,0,0,0,0
+d36c637f-a9a4-4d21-b432-9a31fcc6c119,b68c7448-6912-444a-84ad-bc198a165f27,A,"Stay on the official route. You trust the warning and don't want to risk it, even if it takes longer.",0,2,0,2,0,0,0,0
+d46a1576-c260-47ee-9290-81989d35c786,e7c59f31-e58b-4016-afe8-43cf6b23289e,B,"Take small steps just in case (e.g., charge your phone, find important documents) but don't pack or plan to leave yet.",1,-1,0,0,0,0,0,1
+d5ea9a4e-1617-40c0-8035-4a4dff8b2f50,e755dcfa-e6b9-4784-9281-7b047e9e18b6,C,"To a summer cottage, or a friend's or family's house in another location.",0,0,0,2,0,0,0,0
+d871804f-1e07-4c45-894c-99602c9cbdbf,dab4be99-b386-4a76-a81f-1869bcc49cd4,C,Sit down and check your phone first. It's better to know more before moving.,0,0,0,0,0,-1,0,-1
+de050932-dc9b-4d1d-a62d-e70f8aceb06c,b045d423-9856-453b-98f5-7d11d1af44b7,B,Feel hesitant but keep the offer in mind while exploring other options first.,0,0,0,0,0,0,1,0
+e20e628e-51ae-4a43-8878-a5028c3b465c,b045d423-9856-453b-98f5-7d11d1af44b7,D,Decline the offer because you prefer to arrange your own travel.,0,0,2,0,0,0,-2,0
+e43914b4-9c82-46a8-9b89-b69331765e07,27c438db-e4dc-4d89-bb16-796c674fa81d,E,"Go, but take your own car instead of the bus. You feel more in control that way.",0,-1,0,2,0,0,0,0
+e4611777-11d3-4b55-82a1-c56569c610f4,0f620fd5-626b-4a2e-a0ab-bcb6a6db8238,B,"Check news media (TV news, news websites, live coverage).",0,0,-1,0,0,0,0,0
+eb3eea89-5ad8-438f-b763-871b2e92c8f6,a68b929c-9522-4fc2-b348-646586d18273,B,"Consider taking the spot, but hesitate and look to others' reactions first.",1,0,0,1,0,0,-1,0
+f0fd48dc-1533-41a2-97a0-1deb2163cec3,2dab8d55-7958-44f6-a547-a43f6b7c5efc,D,"Look for alternative options (e.g., carpooling, ride-sharing) to balance both.",0,0,0,-1,0,0,0,1
+f97fbc02-619d-411b-8d5d-6fa903e4b7ff,b68c7448-6912-444a-84ad-bc198a165f27,B,"Stay on the official route for now, but keep checking for updates. You'll decide later if it's worth switching.",0,1,0,0,0,0,0,0
+fb4d67fc-cb30-42d3-977e-15529383304b,0f620fd5-626b-4a2e-a0ab-bcb6a6db8238,C,Check social media and online discussions.,0,0,-1,0,0,0,0,0
+fc186579-e14e-4216-b166-c5daa16bd76f,27c438db-e4dc-4d89-bb16-796c674fa81d,B,Pack carefully and head to the assembly point within the 2 hours. You follow the plan.,0,2,0,2,0,0,0,0
+fd2d4e78-82db-48c1-8b14-e8a82ff3e3bf,8138467a-9e6a-46ed-ac5c-aa51d8d800d7,E,Try to get into the destination anyway.,1,0,0,0,0,-2,0,0
+fe14cde9-6878-404c-b98a-b1d1a1f04158,e755dcfa-e6b9-4784-9281-7b047e9e18b6,B,To another municipality nearby: a town or city further from the risk.,0,0,0,1,1,0,0,0
+feb24c41-df11-4da2-be35-cccf08949013,0f620fd5-626b-4a2e-a0ab-bcb6a6db8238,D,"Ask friends, family or acquaintances / neighbours.",0,0,-1,0,0,0,0,0
