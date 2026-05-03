@@ -9,7 +9,7 @@ Our team solution is **Game-based Participatory Data Collection for Evacuation P
 
 This repository is for the **dashboard** part of the solution.
 
-Please check the deployed dashboard [HERE] (https://gcc2026-foursight-dashboard.streamlit.app/) in Streamlit with the password: `2026`.
+Please check the deployed dashboard [HERE](https://gcc2026-foursight-dashboard.streamlit.app/) in Streamlit with the password: `2026`.
 
 Note: The data used in this dashboard is fake data only for demonstration.
 
