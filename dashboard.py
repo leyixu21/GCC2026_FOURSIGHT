@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-from municipality_population_and_coords import municipality_data
+from data.municipality_population_and_coords import municipality_data
 
 st.set_page_config(layout="wide")
 
@@ -42,8 +42,8 @@ def check_authority_login():
         
         st.stop()
 
-# # Check authentication
-# check_authority_login()
+# Check authentication
+check_authority_login()
 
 # Personality mapping
 PERSONALITY_MAPPING = {
